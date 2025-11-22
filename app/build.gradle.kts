@@ -24,7 +24,19 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         // BuildConfig에 API Key 추가
-        buildConfigField("String", "G_MAP_API_KEY", properties.getProperty("G_MAP_API_KEY"))
+//        buildConfigField("String", "G_MAP_API_KEY", properties.getProperty("G_MAP_API_KEY"))
+//        buildConfigField("String", "PLACES_API_KEY", properties.getProperty("PLACES_API_KEY"))
+        buildConfigField(
+            "String",
+            "G_MAP_API_KEY",
+            "\"${properties.getProperty("G_MAP_API_KEY")}\""
+        )
+
+        buildConfigField(
+            "String",
+            "PLACES_API_KEY",
+            "\"${properties.getProperty("PLACES_API_KEY")}\""
+        )
     }
 
     buildTypes {
@@ -64,4 +76,9 @@ dependencies {
     //google map
     implementation("com.google.android.gms:play-services-maps:19.2.0")
     implementation("com.google.android.gms:play-services-location:21.3.0")
+
+    implementation("com.google.android.libraries.places:places:3.3.0")
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 }

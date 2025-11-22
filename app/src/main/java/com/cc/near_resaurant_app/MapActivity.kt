@@ -19,6 +19,13 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.model.RectangularBounds
 import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest
+import com.cc.near_resaurant_app.retrofit.RetrofitClient
+import com.cc.near_resaurant_app.retrofit.PlacesResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
+
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
