@@ -1,4 +1,4 @@
-package com.cc.near_resaurant_app
+package com.cc.near_restaurant_app
 
 import android.content.Context
 import android.content.pm.PackageManager

@@ -1,4 +1,4 @@
-package com.cc.near_resaurant_app
+package com.cc.near_restaurant_app
 
 import android.Manifest
 import android.app.Activity
@@ -22,7 +22,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.cc.near_resaurant_app.databinding.ActivityMainBinding
+import com.cc.near_restaurant_app.LocationProvider
+import com.cc.near_restaurant_app.MapActivity
+import com.cc.near_restaurant_app.R
+import com.cc.near_restaurant_app.databinding.ActivityMainBinding
 import java.io.IOException
 import java.util.Locale
 
@@ -59,7 +62,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding =ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
 
         enableEdgeToEdge()
         setContentView(binding.root)

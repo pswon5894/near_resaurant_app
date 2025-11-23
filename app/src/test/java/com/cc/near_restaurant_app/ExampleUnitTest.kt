@@ -1,4 +1,4 @@
-package com.cc.near_resaurant_app
+package com.cc.near_restaurant_app
 
 import org.junit.Test
 

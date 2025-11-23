@@ -11,11 +11,11 @@ val properties: Properties = Properties().apply {
 }
 
 android {
-    namespace = "com.cc.near_resaurant_app"
+    namespace = "com.cc.near_restaurant_app"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.cc.near_resaurant_app"
+        applicationId = "com.cc.near_restaurant_app"
         minSdk = 24
         targetSdk = 36
         versionCode = 1

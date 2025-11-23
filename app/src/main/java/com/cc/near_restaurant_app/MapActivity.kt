@@ -1,4 +1,4 @@
-package com.cc.near_resaurant_app
+package com.cc.near_restaurant_app
 
 import android.app.Activity
 import android.content.Intent
@@ -7,24 +7,21 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.cc.near_resaurant_app.databinding.ActivityMapBinding
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.cc.near_restaurant_app.databinding.ActivityMapBinding
+import com.cc.near_restaurant_app.retrofit.PlacesResponse
+import com.cc.near_restaurant_app.retrofit.RetrofitClient
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.internal.IGoogleMapDelegate
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.api.model.RectangularBounds
-import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest
-import com.cc.near_resaurant_app.retrofit.RetrofitClient
-import com.cc.near_resaurant_app.retrofit.PlacesResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
 
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -35,11 +32,14 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     var currentLat : Double = 0.0
     var currentLng : Double = 0.0
 
+    private val restaurants = mutableListOf<Restaurant>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
         binding = ActivityMapBinding.inflate(layoutInflater)
+        binding.rvRestaurants.layoutManager = LinearLayoutManager(this)
         setContentView(binding.root)
 
         currentLat = intent.getDoubleExtra("currentLat", 0.0)
@@ -63,8 +63,18 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             val latitude = locationProvider.getLocationLatitude()
             val longitude = locationProvider.getLocationLongitude()
 
-            mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(latitude!!,longitude!!), 16f))
-            setMarker()
+            if (latitude != null && longitude != null) {
+                mMap?.moveCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        LatLng(latitude, longitude),
+                        16f
+                    )
+                )
+                setMarker()
+
+                // 주변 식당 다시 불러오기
+                loadNearbyRestaurants(latitude, longitude)
+            }
         }
     }
 
@@ -87,7 +97,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             it.clear()
             val markerOption = MarkerOptions()
             markerOption.position(it.cameraPosition.target)
-            markerOption.title("마커 위치")
+            markerOption.title("현재 위치")
+            markerOption.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
             val marker = it.addMarker(markerOption)
         }
     }
@@ -122,7 +133,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                                 .position(pos)
                                 .title(place.name)
                         )
+                        restaurants.add(Restaurant(place.name, pos))
                     }
+                    // RecyclerView 어댑터 적용
+                    binding.rvRestaurants.adapter = RestaurantAdapter(restaurants)
                 }
             }
 

@@ -1,4 +1,4 @@
-package com.cc.near_resaurant_app.retrofit
+package com.cc.near_restaurant_app.retrofit
 
 import retrofit2.Call
 import retrofit2.http.GET
