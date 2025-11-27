@@ -15,7 +15,7 @@ why 레트로핏?
 
 레트로핏 라이브러리 구성요소
 인터페이스:http메서드 정의
-레트로핏 클래스: 레트로핏 객체 생서
+레트로핏 클래스: 레트로핏 객체 생성
 데이터 클래스:json 데이트를 담는
 
 //https://developers.google.com/maps/documentation/places/web-service/legacy/details?hl=ko#PlacePhoto
